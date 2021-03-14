@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// use app\Http\Controllers\Web\ProductController;
+// use app\Http\Controllers\Web\TypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +15,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['namespace' => 'Web'], function(){
+    
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth'])->name('dashboard');
+    
+    require __DIR__.'/auth.php';
+    
+    Route::resource('products', 'ProductController', ['names' => 'product']);
+    
+    Route::resource('types', 'TypeController', ['names' => 'type']);
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__.'/auth.php';
