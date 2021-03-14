@@ -12,7 +12,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'price',
-        'type_ id',
+        'type_id',
     ];
 
     public function Type(){

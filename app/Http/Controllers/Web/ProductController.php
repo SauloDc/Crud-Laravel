@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Type;
 
 class ProductController extends Controller
 {
@@ -14,7 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return ;
+        $products = Product::all();
+        return view('pages.products.index', ['products' => $products]);
     }
 
     /**
@@ -24,7 +27,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $types = Type::all();
+        return view('pages.products.create', ['types' => $types]);
     }
 
     /**
@@ -35,7 +39,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Product::create($request->all()); 
+        return redirect(route('product.index'));
     }
 
     /**
@@ -46,7 +51,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::find($id);
+        return view('pages.products.show', ['product' => $product]);
     }
 
     /**
@@ -57,7 +63,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+        $types = Type::all();
+        return view('pages.products.edit', ['types' => $types, 'product' => $product]);
     }
 
     /**
@@ -69,7 +77,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        $product->update($request->all()); 
+        return redirect(route('product.index'));
     }
 
     /**
@@ -80,6 +90,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+        return redirect(route('product.index'));
     }
 }
