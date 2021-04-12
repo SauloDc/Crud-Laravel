@@ -17,9 +17,10 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string("name");
             $table->float("price");
-            $table->unsignedBigInteger("type_id");            
+            $table->unsignedBigInteger("type_id")->nullable();            
             $table->timestamps();
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
+            $table->softDeletes();
         });
     }
 

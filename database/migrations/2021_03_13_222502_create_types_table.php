@@ -18,6 +18,7 @@ class CreateTypesTable extends Migration
             $table->string('label');
             $table->string('description')->nullable();
             $table->timestamps();    
+            $table->softDeletes();
         });
     }
 

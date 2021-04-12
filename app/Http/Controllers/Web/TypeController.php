@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Type;
 
 class TypeController extends Controller
 {
@@ -14,7 +15,8 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = Type::all();
+        return view('pages.types.index', ['types' => $types]);
     }
 
     /**
@@ -24,7 +26,8 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        $types = Type::all();
+        return view('pages.types.create', ['types' => $types]);
     }
 
     /**
@@ -35,7 +38,8 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Type::create($request->all());
+        return redirect(route('type.index'));
     }
 
     /**
@@ -46,7 +50,8 @@ class TypeController extends Controller
      */
     public function show($id)
     {
-        //
+       $type = Type::find($id);
+       return view('pages.types.show', ['type' => $type]);
     }
 
     /**
@@ -57,7 +62,8 @@ class TypeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $type = Type::find($id);
+        return view("pages.types.edit", ['type' => $type]);
     }
 
     /**
@@ -69,7 +75,9 @@ class TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $type = Type::find($id);
+        $type->update($request->all());
+        return redirect(route('type.index'));
     }
 
     /**
@@ -80,6 +88,8 @@ class TypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $type = Type::find($id);
+        $type->delete();
+        return redirect(route('type.index'));
     }
 }
